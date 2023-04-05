@@ -1,20 +1,22 @@
 extends layout
+
 block content
   h1= title
   p Welcome to Daniel Omole's server
-  button(type='button', class='btn btn-secondary', onclick='doReduce()') Press me 
-  div(id="reduce")
-    p Reduce the value.
+  -const results = [
+    {name:'Guitar', brand:'Fender', price: 1000},
+    {name: 'Piano', brand: 'Yamaha', price: 5000},
+    {name: 'Drums', brand: 'Pearl', price: 1500}
+  ]
 
-  script. 
-    var count = 30
-    var change = -1
-    function doReduce(){
-      count += change 
-      change -=1
-      document.getElementById("reduce").innerHTML = "Count " + count + " with change " + change 
+  .container-fluid
+    .row
+      each item in results
+        .col-sm-2
+          .musical_instrument
+            p Instrument type: #{item.name}
+            p Brand: #{item.brand}
+            p Cost: $#{item.price}
 
-
-    }
 
 

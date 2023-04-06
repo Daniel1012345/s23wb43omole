@@ -1,6 +1,12 @@
 extends layout
 block content
   h1= title
+  - var images = ["guitar.jpg", "sarod.jpg", "trumbone.jpg", "trumpet.jpg", "violin.jpg"]
+  - for (let i = 0; i < 3; i++)
+    - let ind = Math.floor(Math.random() * 5)
+    img(src=`images/${images[ind]}`, alt=`These are instruments ${ind}`, height="300px", width="300px")
+
+  
    
   
 

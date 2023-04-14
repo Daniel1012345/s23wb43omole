@@ -3,7 +3,7 @@ const musical_controllers= require('../controllers/musical');
 var router = express.Router();
 
 /* GET costumes */
-router.get('/', musical_controllers.musical_view_all_Page );
+router.get('/musical/:id', musical_controllers.musical_detail );
 module.exports = router;
 
 /*

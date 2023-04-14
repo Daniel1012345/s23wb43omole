@@ -2,12 +2,73 @@
 
 var Musical = require('../models/musical');
 
-exports.musical_detail = function (req, res) {
-  res.send('NOT IMPLEMENTED: Musical detail: ' + req.params.id);
+exports.musical_detail = function _callee(req, res) {
+  var result;
+  return regeneratorRuntime.async(function _callee$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          console.log("detail" + req.params.id);
+          _context.prev = 1;
+          _context.next = 4;
+          return regeneratorRuntime.awrap(Musical.findById(req.params.id));
+
+        case 4:
+          result = _context.sent;
+          res.send(result);
+          _context.next = 12;
+          break;
+
+        case 8:
+          _context.prev = 8;
+          _context.t0 = _context["catch"](1);
+          res.status(500);
+          res.send("{\"error\": document for id ".concat(req.params.id, " not found"));
+
+        case 12:
+        case "end":
+          return _context.stop();
+      }
+    }
+  }, null, null, [[1, 8]]);
 };
 
-exports.musical_create_post = function (req, res) {
-  res.send('NOT IMPLEMENTED: Musical create POST');
+exports.musical_create_post = function _callee2(req, res) {
+  var document, result;
+  return regeneratorRuntime.async(function _callee2$(_context2) {
+    while (1) {
+      switch (_context2.prev = _context2.next) {
+        case 0:
+          document = new Musical(); // We are looking for a body, since POST does not have query parameters.
+          // Even though bodies can be in many different formats, we will be picky
+          // and require that it be a json object
+          // {"costume_type":"goat", "cost":12, "size":"large"}
+
+          document.instrument_type = req.body.instrument_type;
+          document.brand = req.body.brand;
+          document.cost = req.body.cost;
+          _context2.prev = 4;
+          _context2.next = 7;
+          return regeneratorRuntime.awrap(document.save());
+
+        case 7:
+          result = _context2.sent;
+          res.send(result);
+          _context2.next = 15;
+          break;
+
+        case 11:
+          _context2.prev = 11;
+          _context2.t0 = _context2["catch"](4);
+          res.status(500);
+          res.send("{\"error\": ".concat(_context2.t0, "}"));
+
+        case 15:
+        case "end":
+          return _context2.stop();
+      }
+    }
+  }, null, null, [[4, 11]]);
 };
 
 exports.musical_delete = function (req, res) {
@@ -19,30 +80,30 @@ exports.musical_update_put = function (req, res) {
 }; // List of all Musicals
 
 
-exports.musical_list = function _callee(req, res) {
-  return regeneratorRuntime.async(function _callee$(_context) {
+exports.musical_list = function _callee3(req, res) {
+  return regeneratorRuntime.async(function _callee3$(_context3) {
     while (1) {
-      switch (_context.prev = _context.next) {
+      switch (_context3.prev = _context3.next) {
         case 0:
-          _context.prev = 0;
-          _context.next = 3;
+          _context3.prev = 0;
+          _context3.next = 3;
           return regeneratorRuntime.awrap(Musical.find());
 
         case 3:
-          themusical = _context.sent;
+          themusical = _context3.sent;
           res.send(themusical);
-          _context.next = 11;
+          _context3.next = 11;
           break;
 
         case 7:
-          _context.prev = 7;
-          _context.t0 = _context["catch"](0);
+          _context3.prev = 7;
+          _context3.t0 = _context3["catch"](0);
           res.status(500);
-          res.send("{\"error\": ".concat(_context.t0, "}"));
+          res.send("{\"error\": ".concat(_context3.t0, "}"));
 
         case 11:
         case "end":
-          return _context.stop();
+          return _context3.stop();
       }
     }
   }, null, null, [[0, 7]]);
@@ -50,33 +111,33 @@ exports.musical_list = function _callee(req, res) {
 // Handle a show all view
 
 
-exports.musical_view_all_Page = function _callee2(req, res) {
-  return regeneratorRuntime.async(function _callee2$(_context2) {
+exports.musical_view_all_Page = function _callee4(req, res) {
+  return regeneratorRuntime.async(function _callee4$(_context4) {
     while (1) {
-      switch (_context2.prev = _context2.next) {
+      switch (_context4.prev = _context4.next) {
         case 0:
-          _context2.prev = 0;
-          _context2.next = 3;
+          _context4.prev = 0;
+          _context4.next = 3;
           return regeneratorRuntime.awrap(Musical.find());
 
         case 3:
-          themusical = _context2.sent;
+          themusical = _context4.sent;
           res.render('musical', {
             title: 'Musical Search Results',
             results: themusical
           });
-          _context2.next = 11;
+          _context4.next = 11;
           break;
 
         case 7:
-          _context2.prev = 7;
-          _context2.t0 = _context2["catch"](0);
+          _context4.prev = 7;
+          _context4.t0 = _context4["catch"](0);
           res.status(500);
-          res.send("{\"error\": ".concat(_context2.t0, "}"));
+          res.send("{\"error\": ".concat(_context4.t0, "}"));
 
         case 11:
         case "end":
-          return _context2.stop();
+          return _context4.stop();
       }
     }
   }, null, null, [[0, 7]]);

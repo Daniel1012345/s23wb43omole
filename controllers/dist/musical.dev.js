@@ -75,43 +75,50 @@ exports.musical_delete = function (req, res) {
   res.send('NOT IMPLEMENTED: Musical delete DELETE ' + req.params.id);
 };
 
-exports.musical_update_put = function (req, res) {
-  res.send('NOT IMPLEMENTED: Musical update PUT' + req.params.id);
-}; // List of all Musicals
-
-
-exports.musical_list = function _callee3(req, res) {
+exports.musical_update_put = function _callee3(req, res) {
+  var toUpdate, result;
   return regeneratorRuntime.async(function _callee3$(_context3) {
     while (1) {
       switch (_context3.prev = _context3.next) {
         case 0:
-          _context3.prev = 0;
-          _context3.next = 3;
-          return regeneratorRuntime.awrap(Musical.find());
+          console.log("update on id ".concat(req.params.id, " with body ").concat(JSON.stringify(req.body)));
+          _context3.prev = 1;
+          _context3.next = 4;
+          return regeneratorRuntime.awrap(musical_update_put.findById(req.params.id));
 
-        case 3:
-          themusical = _context3.sent;
-          res.send(themusical);
+        case 4:
+          toUpdate = _context3.sent;
+          // Do updates of properties
+          if (req.body.muscial_type) toUpdate.musical_type = req.body.musical_type;
+          if (req.body.cost) toUpdate.cost = req.body.cost;
+          if (req.body.size) toUpdate.size = req.body.size;
+          if (req.body.checkboxsale) toUpdate.sale = true;else toUpdate.same = false;
           _context3.next = 11;
-          break;
-
-        case 7:
-          _context3.prev = 7;
-          _context3.t0 = _context3["catch"](0);
-          res.status(500);
-          res.send("{\"error\": ".concat(_context3.t0, "}"));
+          return regeneratorRuntime.awrap(toUpdate.save());
 
         case 11:
+          result = _context3.sent;
+          console.log("Sucess " + result);
+          res.send(result);
+          _context3.next = 20;
+          break;
+
+        case 16:
+          _context3.prev = 16;
+          _context3.t0 = _context3["catch"](1);
+          res.status(500);
+          res.send("{\"error\": ".concat(_context3.t0, ": Update for id ").concat(req.params.id, " failed"));
+
+        case 20:
         case "end":
           return _context3.stop();
       }
     }
-  }, null, null, [[0, 7]]);
-}; // VIEWS
-// Handle a show all view
+  }, null, null, [[1, 16]]);
+}; // List of all Musicals
 
 
-exports.musical_view_all_Page = function _callee4(req, res) {
+exports.musical_list = function _callee4(req, res) {
   return regeneratorRuntime.async(function _callee4$(_context4) {
     while (1) {
       switch (_context4.prev = _context4.next) {
@@ -122,10 +129,7 @@ exports.musical_view_all_Page = function _callee4(req, res) {
 
         case 3:
           themusical = _context4.sent;
-          res.render('musical', {
-            title: 'Musical Search Results',
-            results: themusical
-          });
+          res.send(themusical);
           _context4.next = 11;
           break;
 
@@ -138,6 +142,40 @@ exports.musical_view_all_Page = function _callee4(req, res) {
         case 11:
         case "end":
           return _context4.stop();
+      }
+    }
+  }, null, null, [[0, 7]]);
+}; // VIEWS
+// Handle a show all view
+
+
+exports.musical_view_all_Page = function _callee5(req, res) {
+  return regeneratorRuntime.async(function _callee5$(_context5) {
+    while (1) {
+      switch (_context5.prev = _context5.next) {
+        case 0:
+          _context5.prev = 0;
+          _context5.next = 3;
+          return regeneratorRuntime.awrap(Musical.find());
+
+        case 3:
+          themusical = _context5.sent;
+          res.render('musical', {
+            title: 'Musical Search Results',
+            results: themusical
+          });
+          _context5.next = 11;
+          break;
+
+        case 7:
+          _context5.prev = 7;
+          _context5.t0 = _context5["catch"](0);
+          res.status(500);
+          res.send("{\"error\": ".concat(_context5.t0, "}"));
+
+        case 11:
+        case "end":
+          return _context5.stop();
       }
     }
   }, null, null, [[0, 7]]);

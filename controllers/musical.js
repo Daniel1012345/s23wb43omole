@@ -37,9 +37,26 @@ exports.musical_delete = function(req, res) {
     res.send('NOT IMPLEMENTED: Musical delete DELETE ' + req.params.id);
 };
 
-exports.musical_update_put = function(req, res) {
-    res.send('NOT IMPLEMENTED: Musical update PUT' + req.params.id);
+exports.musical_update_put = async function(req, res) {
+    console.log(`update on id ${req.params.id} with body ${JSON.stringify(req.body)}`)
+    try {
+        let toUpdate = await musical_update_put.findById( req.params.id)
+        // Do updates of properties
+        if(req.body.muscial_type)
+            toUpdate.musical_type = req.body.musical_type;
+        if(req.body.cost) toUpdate.cost = req.body.cost;
+        if(req.body.size) toUpdate.size = req.body.size;
+        if(req.body.checkboxsale) toUpdate.sale = true;
+        else toUpdate.same = false;
+        let result = await toUpdate.save();
+        console.log("Sucess " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": ${err}: Update for id ${req.params.id} failed`);
+    }
 };
+
 
 // List of all Musicals
 exports.musical_list = async function(req, res) {

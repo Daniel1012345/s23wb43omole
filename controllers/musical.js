@@ -1,3 +1,4 @@
+const musical = require('../models/musical');
 var Musical = require('../models/musical');
 
 exports.musical_list = function(req, res){
@@ -18,4 +19,16 @@ exports.musical_delete = function(req, res) {
 
 exports.musical_update_put = function(req, res) {
     res.send('NOT IMPLEMENTED: Musical update PUT' + req.params.id);
+};
+
+// List of all Costumes
+exports.musical_list = async function(req, res) {
+    try{
+        themusical = await musical.find();
+        res.send(themusical);
+    }
+    catch(err){
+        res.status(500);
+        res.send(`{"error": ${err}}`);
+    }
 };

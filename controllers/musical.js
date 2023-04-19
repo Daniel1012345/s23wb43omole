@@ -9,7 +9,6 @@ exports.musical_detail = async function(req, res) {
         res.status(500)
         res.send(`{"error": document for id ${req.params.id} not found`);
     }
-
 };
 
 exports.musical_create_post = async function(req, res) {
@@ -75,10 +74,25 @@ exports.musical_list = async function(req, res) {
 exports.musical_view_all_Page = async function(req, res) {
     try{
         themusical = await Musical.find();
-        res.render('musical', { title: 'Musical Search Results', results: themusical });
+        res.render('musical', {title: 'Musical Search Results', results: themusical });
     }
     catch(err){
         res.status(500);
         res.send(`{"error": ${err}}`);
+    }
+};
+
+
+// Handle a show one view with id specified by query
+exports.musical_view_one_Page = async function(req, res) {
+    console.log("single view for id " + req.query.id)
+    try{
+        result = await Musical.findById( req.query.id)
+        res.render('muscialdetail',
+            { title: 'Musical Detail', toShow: result });
+    }
+    catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
     }
 };

@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h1= title
+
+  - let musicalid = toShow._id
+  - let musical_type = toShow.instrument_type
+  - let musicalprice = toShow.price
+  - let musicalbrand = toShow.brand
+
+  div
+    div.row
+      div(class='musicalAttr mr-3') Musical ID is:
+      div #{musicalid}
+    div.row
+      div(class='musicalAttr mr-3') Musical Type is:
+      div #{musical_type}
+    div.row
+      div(class='musicalAttr mr-3') Musical Size is:
+      div #{musicalsize}
+    div.row
+      div(class='musicalAttr mr-3') Musical Cost is:
+      div #{musicalcost}

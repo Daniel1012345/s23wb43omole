@@ -6,3 +6,8 @@ body {
 a {
   color: #00B7FF;
 }
+
+.musicalAttr {
+  background-color: aquamarine;
+  width: 120px;
+}

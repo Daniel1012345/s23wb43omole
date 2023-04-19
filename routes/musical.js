@@ -4,15 +4,18 @@ var router = express.Router();
 
 /* GET costumes */
 router.get('/musical/:id', musical_controllers.musical_detail );
+
+/* GET detail costume page */
+router.get('/musical/detail', musical_controllers.musical_view_one_Page);
 module.exports = router;
 
 /*
 var express = require('express');
 var router = express.Router();
-
+*/
 //GET home page. 
 router.get('/', function(req, res, next) {
   res.render('musical', { title: 'Seach Results musicals'});
 });
-*/
+
 

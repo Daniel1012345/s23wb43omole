@@ -3,7 +3,7 @@ var Musical = require('../models/musical');
 exports.musical_detail = async function(req, res) {
     console.log("detail" + req.params.id)
     try {
-        const result = await Musical.findById( req.params.id)
+        const result = await Musical.findById(req.params.id)
         res.send(result)
     } catch (error) {
         res.status(500)
@@ -35,7 +35,7 @@ exports.musical_create_post = async function(req, res) {
 exports.musical_delete = async function(req, res) {
     console.log("delete " + req.params.id)
     try {
-        result = await Musical.findByIdAndDelete( req.params.id)
+        result = await Musical.findByIdAndDelete(req.params.id)
         console.log("Removed " + result)
         res.send(result)
     } catch (err) {
@@ -49,10 +49,10 @@ exports.musical_update_put = async function(req, res) {
     try {
         let toUpdate = await musical_update_put.findById( req.params.id)
         // Do updates of properties
-        if(req.body.muscial_type)
-            toUpdate.musical_type = req.body.musical_type;
+        if(req.body.instrument_type)
+            toUpdate.instrument_type = req.body.instrument_type;
         if(req.body.cost) toUpdate.cost = req.body.cost;
-        if(req.body.size) toUpdate.size = req.body.size;
+        if(req.body.brand) toUpdate.brand = req.body.brand;
         if(req.body.checkboxsale) toUpdate.sale = true;
         else toUpdate.same = false;
         let result = await toUpdate.save();
@@ -64,7 +64,20 @@ exports.musical_update_put = async function(req, res) {
     }
 };
 
-
+// Handle building the view for creating a costume.
+// No body, no in path parameter, no query.
+// Does not need to be async
+exports.musical_create_Page = function(req, res) {
+    console.log("create view")
+    try{
+        res.render('musicalcreate', { title: 'Musical Create'});
+    }
+    catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+    
 // List of all Musicals
 exports.musical_list = async function(req, res) {
     try{
@@ -97,6 +110,33 @@ exports.musical_view_one_Page = async function(req, res) {
     try{
         result = await Musical.findById( req.query.id)
         res.render('musicaldetail', { title: 'Musical Detail', toShow: result });
+    }
+    catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
+
+// Handle building the view for updating a costume.
+// query provides the id
+exports.musical_update_Page = async function(req, res) {
+    console.log("update view for item "+req.query.id)
+    try{
+        let result = await Musical.findById(req.query.id)
+        res.render('musicalupdate', { title: 'Musical Update', toShow: result });
+    }
+    catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
+exports.musical_delete_Page = async function(req, res) {
+    console.log("Delete view for id " + req.query.id)
+    try{
+        result = await Musical.findById(req.query.id)
+        res.render('musicaldelete', { title: 'Musical Delete', toShow: result });
     }
     catch(err){
         res.status(500)

@@ -1,17 +1,19 @@
 extends layout
+
 block content
   h1= title
 
-  - const results = [{instrument_type:'Guitar', brand:'Fender', cost: 1000}, {instrument_type: 'Piano', brand: 'Yamaha', cost: 5000}, {instrument_type: 'Drums', brand: 'Pearl', cost: 1500}]
-  
-  .container-fluid
-    .row
-      each item in results
-        .col-sm-2
-          .musical_instrument
-            p Instrument type: #{item.instrument_type}
-            p Brand: #{item.brand}
-            p Cost: $#{item.cost}
 
-
-
+  div(class="container-fluid")
+    div(class="row m-1")
+      - let results = [{instrument_type:'Guitar', brand:'Fender', cost: 1000}, {instrument_type: 'Piano', brand: 'Yamaha', cost: 5000}, {instrument_type: 'Drums', brand: 'Pearl', cost: 1500}]
+      - let items = results
+        each item in items 
+          - let destination = 'dispatch(\"/musical/update?id=${item._id}\")'
+          div(class="row-sm-2 m-1") Item #{item.instrument_type}(#{item.brand}) is #{item.cost}
+            button.btn(class="btn-primary ml-1", onclick=destination ) Update
+       
+  script. 
+    function dispatch(path){
+      window.location.href=path
+    }
